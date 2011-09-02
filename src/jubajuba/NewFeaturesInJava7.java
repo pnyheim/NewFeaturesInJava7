@@ -11,25 +11,21 @@ import java.util.List;
 public class NewFeaturesInJava7 {
 
 	// Numeric literal
-	long credit_card_number = 1234567890123456L;
+	long credit_card_number = 1234_5678_9012_3456L;
 
 	
 	
 	// Binary literal
-	static byte theByte = 3;
+	static byte theByte = 0b011;
 
 	
 	
 	
 	// try with resource
 	public void tryWithResource(String path) throws IOException {
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(path));
+		try(BufferedReader reader = new BufferedReader(new FileReader(path));) {
 			reader.readLine();
-		} finally {
-			reader.close();
-		}
+		} 
 	}
 
 	
@@ -64,7 +60,7 @@ public class NewFeaturesInJava7 {
 	
 	// diamond operator (tune compiler options for quickfix)
 	public List<String> diamond() {
-		List<String> myList = new ArrayList<String>();
+		List<String> myList = new ArrayList<>();
 		
 		return myList;
 	}
@@ -77,22 +73,7 @@ public class NewFeaturesInJava7 {
 	   try {
 		    Object list = null;
 			getClass().getConstructor(Object.class).newInstance(list);
-	} catch (NoSuchMethodException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (SecurityException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (InstantiationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IllegalAccessException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IllegalArgumentException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (InvocationTargetException e) {
+	} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
@@ -105,7 +86,7 @@ public class NewFeaturesInJava7 {
 	static class FirstException extends Exception { }
 	static class SecondException extends Exception { }
 	
-	public void rethrowException(String exceptionName) throws Exception{
+	public void rethrowException(String exceptionName) throws FirstException, SecondException{
 	  try {
 	    if (exceptionName.equals("First")) {
 	      throw new FirstException();
